@@ -1,0 +1,19 @@
+{
+  "name": "phonebook-backend",
+  "version": "1.0.0",
+  "description": "Exercises from the part 3 of the Full Stack Open bootcamp by the University of Helsinki",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordijs/fullstack-open-part3.git"
+  },
+  "author": "Jordi Julià Serra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordijs/fullstack-open-part3/issues"
+  },
+  "homepage": "https://github.com/jordijs/fullstack-open-part3#readme"
+}

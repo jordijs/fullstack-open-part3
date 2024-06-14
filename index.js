@@ -54,35 +54,47 @@ app.delete('/api/persons/:id', (request, response) => {
 
 const generateId = () => {
     const max = 1000000000000000
-    return Math.floor(Math.random() * max);
-  }
+    return Math.floor(Math.random() * max)
+}
 
 app.post('/api/persons', (request, response) => {
-    const body = request.body
+    const { name, number } = request.body
 
-    console.log(body);
+    const validatePerson = (name, number) => {
+        if (!name && !number) return 'It is required to send a name and a number.'
+        if (!name) return 'It is required to send a name.'
+        if (!number) return 'It is required to send a number.'
+        return null
+    }
 
-    if (!body.name || !body.number) {
-        return response.status(400).json({
-            error: 'content missing'
+    const errorMessage = validatePerson(name, number)
+    if (errorMessage) {
+        return response.status(422).json({ error: errorMessage })
+    }
+
+    const existingPerson = persons.find(person => person.name === name)
+    if (existingPerson) {
+        return response.status(409).json({
+            error: 'This person already exists',
+            person: existingPerson
         })
     }
 
     const person = {
-        name: body.name,
-        number: body.number,
+        name: name,
+        number: number,
         id: generateId()
     }
 
     persons = persons.concat(person)
 
-    response.json(person)
+    response.status(201).json(person)
 
 })
 
 app.get('/info', (request, response) => {
 
-    const datetime = new Date();
+    const datetime = new Date()
     const entries = persons.length
 
     const html =

@@ -1,4 +1,15 @@
+#POST (FLY)
 POST https://phonebook-backend-jordijs.fly.dev/api/persons
+Content-Type: application/json
+
+{
+    "name": "Jordi Julià",
+    "number": "123456789"
+}
+
+###
+#POST (localhost)
+POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {

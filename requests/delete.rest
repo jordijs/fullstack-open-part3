@@ -1,1 +1,6 @@
+#FLY
 DELETE https://phonebook-backend-jordijs.fly.dev/api/persons/1
+
+###
+#LOCALHOST
+DELETE http://localhost:3001/api/persons/66749a0e893c890eae3e76a1

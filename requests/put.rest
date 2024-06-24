@@ -1,0 +1,9 @@
+###
+#LOCALHOST
+PUT http://localhost:3001/api/persons/6671802f6835d9db058147d6
+Content-Type: application/json
+
+{
+  "name": "Arto Hellas",
+  "number": "1299-4948902"
+}

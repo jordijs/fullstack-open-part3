@@ -35,7 +35,7 @@ app.get('/api/persons', (request, response) => {
     })
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id)
         .then(person => {
             if (person) {
@@ -57,6 +57,8 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.post('/api/persons', (request, response) => {
     const { name, number } = request.body
+
+    //Validate JSON fields
     const validatePerson = (name, number) => {
         if (!name && !number) return 'It is required to send a name and a number.'
         if (!name) return 'It is required to send a name.'
@@ -68,23 +70,46 @@ app.post('/api/persons', (request, response) => {
         return response.status(400).json({ error: errorMessage })
     }
 
-    // const existingPerson = persons.find(person => person.name === name)
-    // if (existingPerson) {
-    //     return response.status(409).json({
-    //         error: 'This person already exists',
-    //         person: existingPerson
-    //     })
-    // 
+    //Check if person exists
+    Person.findOne({ name: name }).exec()
+        .then(existingPerson => {
+            if (existingPerson) {
+                return response.status(409).json({
+                    error: 'This person already exists',
+                    person: existingPerson
+                })
+            } else {
+                const person = new Person({
+                    name: name,
+                    number: number,
+                })
+                person.save()
+                    .then(savedPerson => {
+                        response.json(savedPerson)
+                    })
+                    .catch(error => next(error))
+            }
+        })
 
-    const person = new Person({
+})
+
+app.put('/api/persons/:id', (request, response) => {
+    const id = request.params.id
+    const { name, number } = request.body
+
+    const person = {
         name: name,
-        number: number,
-    })
-    person.save()
-        .then(savedPerson => {
-            response.json(savedPerson)
+        number: number
+    }
+
+    console.log('personsent', person)
+
+    Person.findByIdAndUpdate(id, person, { new: true })
+        .then(updatedPerson => {
+            response.json(updatedPerson)
         })
         .catch(error => next(error))
+
 })
 
 // app.get('/info', (request, response) => {

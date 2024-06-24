@@ -55,7 +55,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const { name, number } = request.body
 
     //Validate JSON fields
@@ -93,17 +93,16 @@ app.post('/api/persons', (request, response) => {
 
 })
 
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
 
     const id = request.params.id
     const { name, number } = request.body
 
-    const person = {
-        name: name,
-        number: number
-    }
-
-    Person.findByIdAndUpdate(id, person, { new: true })
+    Person.findByIdAndUpdate(
+        id,
+        { name, number },
+        { new: true, runValidators: true, context: 'query' }
+    )
         .then(updatedPerson => {
             response.json(updatedPerson)
         })
@@ -134,10 +133,10 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'SyntaxError') {
         return response.status(400).send({ error: 'incorrect JSON format' })
-    }
-
-    if (error.name === 'CastError') {
+    } else if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).send({ error: error.message })
     }
 
     next(error)

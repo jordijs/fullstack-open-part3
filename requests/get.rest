@@ -6,9 +6,17 @@ GET https://phonebook-backend-jordijs.fly.dev/api/persons
 GET https://phonebook-backend-jordijs.fly.dev/api/persons/1
 
 ###
+#info (FLY)
+GET https://phonebook-backend-jordijs.fly.dev/info
+
+###
 #GET ALL (localhost)
 GET http://localhost:3001/api/persons
 
 ###
 #GET BY ID (localhost)
 GET http://localhost:3001/api/persons/6671802f6835d9db058147d6
+
+###
+#info (localhost)
+GET http://localhost:3001/info

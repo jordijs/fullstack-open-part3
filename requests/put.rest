@@ -1,9 +1,18 @@
-###
-#LOCALHOST
-PUT http://localhost:3001/api/persons/6679b576ab95403fa34d6fa5
+#fly
+PUT https://phonebook-backend-jordijs.fly.dev/api/persons/667af50f9ebd1979467a3506
 Content-Type: application/json
 
 {
-  "name": "dfyyuhesdsdfdfd",
-  "number": "1e0-22334455"
+  "name": "Arto Hellas",
+  "number": "857-564259"
+}
+
+###
+#LOCALHOST
+PUT http://localhost:3001/api/persons/667af50f9ebd1979467a3506
+Content-Type: application/json
+
+{
+  "name": "Arto Hellas",
+  "number": "857-564259"
 }

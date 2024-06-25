@@ -1,5 +1,5 @@
 #FLY
-DELETE https://phonebook-backend-jordijs.fly.dev/api/persons/1
+DELETE https://phonebook-backend-jordijs.fly.dev/api/persons/667afa31a0d6e46fdf5f8306
 
 ###
 #LOCALHOST
